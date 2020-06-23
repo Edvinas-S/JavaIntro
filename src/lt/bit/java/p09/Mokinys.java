@@ -6,6 +6,16 @@ public class Mokinys {
     private String pavarde;
     private int klase;
 
+    public Mokinys() {
+
+    }
+
+    public Mokinys(String vardas, String pavarde, int klase) {
+        this.vardas = vardas;
+        this.pavarde = pavarde;
+        this.klase = klase;
+    }
+
     public String getVardas() {
         return vardas;
     }
@@ -28,5 +38,9 @@ public class Mokinys {
 
     public void setKlase(int klase) {
         this.klase = klase;
+    }
+
+    public  String toString() {
+        return this.klase + " " + this.pavarde + " " + this.vardas;
     }
 }
