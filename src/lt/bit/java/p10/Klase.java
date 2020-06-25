@@ -14,8 +14,12 @@ public class Klase {
         mokiniuSarasas("Pradiniai duomenys:");
         System.out.println(" ");
         surusiuojamPagalTrimestra();
-        mokiniuSarasas("Surusiuota:");
+        System.out.println("Blogiausiai besimokantis: "+ mokiniai[mokiniai.length-1]);
         System.out.println(" ");
+        System.out.println("Trys geriausiai besimokinantys yra: ");
+        System.out.println(mokiniai[0]);
+        System.out.println(mokiniai[1]);
+        System.out.println(mokiniai[2]);
 
     }
 
@@ -46,7 +50,7 @@ public class Klase {
     static void mokiniuSarasas(String title) {
         System.out.println(title);
         for (int i = 0; i < mokiniai.length; i++) {
-            System.out.println(mokiniai[i].getKlase() +" "+mokiniai[i].getPavarde() +" "+mokiniai[i].getVardas());
+            System.out.println(mokiniai[i].getKlase() +" "+mokiniai[i].getPavarde() +" "+mokiniai[i].getVardas() +" "+ Arrays.toString(mokiniai[i].getTrimestras()));
         }
     }
 
