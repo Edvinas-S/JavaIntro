@@ -62,10 +62,4 @@ public class Statistika {
         System.out.println("Kam virs 50 metu atlyginimo vidurkis yra: "+ atlygioSuma50 / people.size());
     }
 
-    static void spausdinameSarasa(ArrayList x) {
-        for (int i = 0; i < x.size(); i++) {
-            System.out.println("Vardas: "+x.get(i));
-        }
-    }
-
 }
