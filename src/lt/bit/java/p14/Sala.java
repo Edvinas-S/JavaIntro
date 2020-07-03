@@ -1,66 +1,97 @@
 package lt.bit.java.p14;
 
-import sun.security.util.ArrayUtil;
-
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 public class Sala {
 
-    static Random random = new Random();
-    static int zmogeliukuSkaicius = 5;
+    static int zmogeliukuSkaicius = 4;
     static Zmogeliukas[] zmogeliukai = new Zmogeliukas[zmogeliukuSkaicius];
+    static Random random = new Random();
+    static int metai = 0;
+    static int mire = 0;
+    static int gime = 0;
+    static int pasikeiteMire = mire;
+    static int pasikeiteGime = gime;
 
-    public  static void main(String[] args) {
+    public static void main(String[] args) {
 
-        sukuriameZmogeliukus();
+        sugeneruojameZmogeliukus();
+
+        // is statinio zmogeliukai masyvo pasidarome dinamini sarasa
+        ArrayList<Zmogeliukas> sarasasZmogeliuku = new ArrayList<Zmogeliukas>(Arrays.asList(zmogeliukai));
+        System.out.println(" ");
+        int pakitesSarasas = sarasasZmogeliuku.size();
 
         //TODO
-//        mirtiesLoterija();
-//        System.out.println("Siais metais mire: "+ mire);
-//        givybesLoterija();
-//        System.out.println("Siais metais gime: "+ gime);
 
-        System.out.println("Zmogeliuku saloje: "+ zmogeliukai.length);
-    }
 
-    public static void sukuriameZmogeliukus() {
-        for (int i = 0; i < zmogeliukai.length; i++) {
-            zmogeliukai[i] = sugeneruotasZmogeliukas();
-            System.out.println("Zmogeliuko amzius yra: "+ zmogeliukai[i].getAge());
+        while (sarasasZmogeliuku.size() > 0) {
+            metai++;
+
+            // MIRTIES / GIVYBES LOTERIJA
+            for (int i = 0; i < sarasasZmogeliuku.size(); i++) {
+                if (sarasasZmogeliuku == null || i < 0 || i > sarasasZmogeliuku.size()) {
+                    System.out.println("Nieko numarinti nebegalime!!");
+                } else if ((sarasasZmogeliuku.get(i).getAge() <= 10) && (random.nextInt(20) == 0)) {
+                    sarasasZmogeliuku.remove(i);
+                    mire++;
+                } else if ((sarasasZmogeliuku.get(i).getAge() > 10) && (sarasasZmogeliuku.get(i).getAge() <= 20) && (random.nextInt(50) == 0)) {
+                    sarasasZmogeliuku.remove(i);
+                    mire++;
+                } else if ((sarasasZmogeliuku.get(i).getAge() > 20) && (sarasasZmogeliuku.get(i).getAge() <= 50) && (random.nextInt(20) == 0)) {
+                    sarasasZmogeliuku.remove(i);
+                    mire++;
+                } else if ((sarasasZmogeliuku.get(i).getAge() > 50) && (random.nextInt(10) == 0)) {
+                    sarasasZmogeliuku.remove(i);
+                    mire++;
+                } else if (sarasasZmogeliuku.get(i).getAge() >= 15 && sarasasZmogeliuku.get(i).getAge() <= 30 && (random.nextInt(10) == 0)) {
+                    sarasasZmogeliuku.add(new Zmogeliukas());
+                    gime++;
+                } else if (sarasasZmogeliuku.get(i).getAge() >= 31 && sarasasZmogeliuku.get(i).getAge() <= 50 && (random.nextInt(20) == 0)) {
+                    sarasasZmogeliuku.add(new Zmogeliukas());
+                    gime++;
+                }
+
+                // jei MIRE spausdiname
+                if (mire != pasikeiteMire) {
+                    System.out.println("Siais " + metai + " metais mire: " + mire +"-sis");
+                    pasikeiteMire = mire;
+                }
+
+                // jei GIME spausdiname
+                if (gime != pasikeiteGime) {
+                    System.out.println("Siais " + metai + " metais gime: " + gime +"-as");
+                    pasikeiteGime = gime;
+                }
+                // spausdiname kiek saloje gyvena zmogeliuku
+                if(sarasasZmogeliuku.size() != pakitesSarasas) {
+                    System.out.println("Siuo metu saloje gyvena: " + sarasasZmogeliuku.size());
+                    pakitesSarasas = sarasasZmogeliuku.size();
+                }
+            }
+
+            // pasendinam visus zmogeliukus vieneriais metais
+            for (int i = 0; i < sarasasZmogeliuku.size(); i++) {
+                sarasasZmogeliuku.get(i).setAge(sarasasZmogeliuku.get(i).getAge() + 1);
+            }
         }
     }
-// sugenerujame zmogeliuko amziu nuo 0 iki 99 metu
-    public static Zmogeliukas sugeneruotasZmogeliukas() {
+
+    // sugeneruojame fiksuota zmogeliuku sarasa
+    static void sugeneruojameZmogeliukus () {
+        for (int i = 0; i < zmogeliukuSkaicius; i++) {
+            zmogeliukai[i] = sugeneruotasZmogeliukas();
+            System.out.println(i + 1 + "- Zmogeliuko amzius yra: " + zmogeliukai[i].getAge());
+        }
+    }
+
+    // sugenerujame zmogeliuko amziu nuo 0 iki 99 metu
+    static Zmogeliukas sugeneruotasZmogeliukas () {
         Zmogeliukas zmogeliukas = new Zmogeliukas();
         zmogeliukas.setAge(random.nextInt(100));
         return zmogeliukas;
     }
-/* da fuck niekas neveikia ...
-    public static Zmogeliukas[] mirtiesLoterija() {
-        for (int i = 0; i < zmogeliukai.length; i++) {
-            if (zmogeliukai == null || i < 0 || i > zmogeliukai.length) {
-                System.out.println("Nieko numarinti nebegalime!!");
-                return zmogeliukai;
-            } else
-            if ((zmogeliukai[i].getAge() <= 10) && (random.nextInt(20) == 0)) {
-                zmogeliukai[i] = mazinameArray(i);
-            } else
-            if ((zmogeliukai[i].getAge() > 10) && (zmogeliukai[i].getAge() <= 20) && (random.nextInt(50) == 0)) {
-                zmogeliukai[i] = mazinameArray(i);
-            } else
-            if ((zmogeliukai[i].getAge() > 20) && (zmogeliukai[i].getAge() <= 50) && (random.nextInt(20) == 0)) {
-                zmogeliukai[i] = mazinameArray(i);
-            } else
-            if ((zmogeliukai[i].getAge() > 50) && (random.nextInt(10) == 0)) {
-                zmogeliukai[i] = mazinameArray(i);
-        }
-    }
 
-    public static int[] mazinameArray(int index) {
-            return IntStream.range(0, zmogeliukai.length).filter(i -> i != index)
-                    .map(i -> zmogeliukai[i]).toArray();
-    }
-*/
 }
