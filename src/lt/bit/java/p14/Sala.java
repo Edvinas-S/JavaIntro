@@ -25,7 +25,8 @@ public class Sala {
         int pakitesSarasas = sarasasZmogeliuku.size();
 
         //TODO
-
+        //kazkaip padaryti didejancia mirties tikimybe po 50metu;
+        //kai pagimdo reikia ta zmogeliuka "suspenduoti" porai metu nuo gimdymo :)
 
         while (sarasasZmogeliuku.size() > 0) {
             metai++;
@@ -65,6 +66,7 @@ public class Sala {
                     System.out.println("Siais " + metai + " metais gime: " + gime +"-as");
                     pasikeiteGime = gime;
                 }
+
                 // spausdiname kiek saloje gyvena zmogeliuku
                 if(sarasasZmogeliuku.size() != pakitesSarasas) {
                     System.out.println("Siuo metu saloje gyvena: " + sarasasZmogeliuku.size());
