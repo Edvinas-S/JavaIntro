@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Sala {
 
-    static int zmogeliukuSkaicius = 4;
+    static int zmogeliukuSkaicius = 10;
     static Zmogeliukas[] zmogeliukai = new Zmogeliukas[zmogeliukuSkaicius];
     static Random random = new Random();
     static int metai = 0;
