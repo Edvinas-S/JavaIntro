@@ -2,6 +2,7 @@ package lt.bit.java.p14;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 public class Sala {
@@ -19,6 +20,9 @@ public class Sala {
 
         sugeneruojameZmogeliukus();
 
+        List<Zmogeliukas> Mirtininkas = new ArrayList<Zmogeliukas>();
+        List<Zmogeliukas> Naujagimiai = new ArrayList<Zmogeliukas>();
+
         // is statinio zmogeliukai masyvo pasidarome dinamini sarasa
         ArrayList<Zmogeliukas> sarasasZmogeliuku = new ArrayList<Zmogeliukas>(Arrays.asList(zmogeliukai));
         System.out.println(" ");
@@ -33,45 +37,53 @@ public class Sala {
 
             // MIRTIES / GIVYBES LOTERIJA
             for (int i = 0; i < sarasasZmogeliuku.size(); i++) {
+                Zmogeliukas einamasisZmogeliukas = sarasasZmogeliuku.get(i);
+
                 if (sarasasZmogeliuku == null || i < 0 || i > sarasasZmogeliuku.size()) {
                     System.out.println("Nieko numarinti nebegalime!!");
-                } else if ((sarasasZmogeliuku.get(i).getAge() <= 10) && (random.nextInt(20) == 0)) {
-                    sarasasZmogeliuku.remove(i);
+                } else if ((einamasisZmogeliukas.getAge() <= 10) && (random.nextInt(20) == 0)) {
+                    Mirtininkas.add(einamasisZmogeliukas);
                     mire++;
-                } else if ((sarasasZmogeliuku.get(i).getAge() > 10) && (sarasasZmogeliuku.get(i).getAge() <= 20) && (random.nextInt(50) == 0)) {
-                    sarasasZmogeliuku.remove(i);
+                } else if ((einamasisZmogeliukas.getAge() > 10) && (einamasisZmogeliukas.getAge() <= 20) && (random.nextInt(50) == 0)) {
+                    Mirtininkas.add(einamasisZmogeliukas);
                     mire++;
-                } else if ((sarasasZmogeliuku.get(i).getAge() > 20) && (sarasasZmogeliuku.get(i).getAge() <= 50) && (random.nextInt(20) == 0)) {
-                    sarasasZmogeliuku.remove(i);
+                } else if ((einamasisZmogeliukas.getAge() > 20) && (einamasisZmogeliukas.getAge() <= 50) && (random.nextInt(20) == 0)) {
+                    Mirtininkas.add(einamasisZmogeliukas);
                     mire++;
-                } else if ((sarasasZmogeliuku.get(i).getAge() > 50) && (random.nextInt(10) == 0)) {
-                    sarasasZmogeliuku.remove(i);
+                } else if ((einamasisZmogeliukas.getAge() > 50) && (random.nextInt(10) == 0)) {
+                    Mirtininkas.add(einamasisZmogeliukas);
                     mire++;
-                } else if (sarasasZmogeliuku.get(i).getAge() >= 15 && sarasasZmogeliuku.get(i).getAge() <= 30 && (random.nextInt(10) == 0)) {
-                    sarasasZmogeliuku.add(new Zmogeliukas());
+                } else if (einamasisZmogeliukas.getAge() >= 15 && einamasisZmogeliukas.getAge() <= 30 && (random.nextInt(10) == 0)) {
+                    Naujagimiai.add(einamasisZmogeliukas);
                     gime++;
-                } else if (sarasasZmogeliuku.get(i).getAge() >= 31 && sarasasZmogeliuku.get(i).getAge() <= 50 && (random.nextInt(20) == 0)) {
-                    sarasasZmogeliuku.add(new Zmogeliukas());
+                } else if (einamasisZmogeliukas.getAge() >= 31 && einamasisZmogeliukas.getAge() <= 50 && (random.nextInt(20) == 0)) {
+                    Naujagimiai.add(einamasisZmogeliukas);
                     gime++;
                 }
 
-                // jei MIRE spausdiname
-                if (mire != pasikeiteMire) {
-                    System.out.println("Siais " + metai + " metais mire: " + mire +"-sis");
-                    pasikeiteMire = mire;
-                }
+            }
 
-                // jei GIME spausdiname
-                if (gime != pasikeiteGime) {
-                    System.out.println("Siais " + metai + " metais gime: " + gime +"-as");
-                    pasikeiteGime = gime;
-                }
+            sarasasZmogeliuku.removeAll(Mirtininkas);
+            sarasasZmogeliuku.addAll(Naujagimiai);
+            Mirtininkas.clear();
+            Naujagimiai.clear();
 
-                // spausdiname kiek saloje gyvena zmogeliuku
-                if(sarasasZmogeliuku.size() != pakitesSarasas) {
-                    System.out.println("Siuo metu saloje gyvena: " + sarasasZmogeliuku.size());
-                    pakitesSarasas = sarasasZmogeliuku.size();
-                }
+            // jei MIRE spausdiname
+            if (mire != pasikeiteMire) {
+                System.out.println("Siais " + metai + " metais mire: " + mire +"-sis");
+                pasikeiteMire = mire;
+            }
+
+            // jei GIME spausdiname
+            if (gime != pasikeiteGime) {
+                System.out.println("Siais " + metai + " metais gime: " + gime +"-as");
+                pasikeiteGime = gime;
+            }
+
+            // spausdiname kiek saloje gyvena zmogeliuku
+            if(sarasasZmogeliuku.size() != pakitesSarasas) {
+                System.out.println("Siuo metu saloje gyvena: " + sarasasZmogeliuku.size());
+                pakitesSarasas = sarasasZmogeliuku.size();
             }
 
             // pasendinam visus zmogeliukus vieneriais metais
